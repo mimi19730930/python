@@ -1,0 +1,44 @@
+# coding: utf-8
+
+import csv
+
+#函数 将列表分解
+
+def liebiao(string1):
+    qie=string1.split('\xa1\xa2')
+    result=[]
+    for i in qie:
+        if '-' in i:
+            zai_qie=i.split('-')
+            for j in range(int(zai_qie[0]),int(zai_qie[1])+1):
+                result.append(int(j))
+        else:
+             result.append(int(i))
+
+    print result
+    return result
+
+
+#程序主体 
+csvfile = file('d:\guishudi.csv', 'rb')
+reader = csv.reader(csvfile)
+
+a_list=[]
+for line in reader:
+    print line[0],line[1],line[2]
+    a_list.append(line)
+
+print '\n\n'
+
+n=[]
+m=[]
+for i in a_list:
+    print i[0],i[1],i[2]
+    n=liebiao(i[0])
+    for j in n:
+        m.append(j,i[1],i[2])
+
+    print m
+
+csvfile.close()
+
