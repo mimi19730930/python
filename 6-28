@@ -1,0 +1,68 @@
+# coding: utf-8
+
+import csv
+
+#函数 将列表分解
+
+def liebiao(string1):
+    qie=string1.split('\xa1\xa2')
+    result=[]
+    
+# 使用两个循环 跑出类似101-105，19-100中的所有字符
+    for i in qie:
+        if '-' in i:
+            zai_qie=i.split('-')
+            for j in range(int(zai_qie[0]),int(zai_qie[1])+1):
+                #判断语句用于判断 一位数 两位数等特殊情况，需要补零的情形
+                if  (j>=100):        #判断为三位数
+                  result.append(str(j))
+                elif (j>=10)&(j<=99): #判断为两位数
+                  result.append('0'+str(j))
+                elif (j<=9):          #判断为1位数
+                    result.append('00'+str(j))
+        else:
+             #判断语句用于判断 一位数 两位数等特殊情况，需要补零的情形
+             if  (i>=100):       #判断为三位数
+                    result.append(str(i))
+             elif (i>=10)&(i<=99): #判断为两位数
+                    result.append('0'+str(i))
+             elif (i<=9):          #判断为1位数
+                    result.append('00'+str(i))
+
+    return result
+
+
+#程序主体 
+csvfile = file('guishudi.csv', 'rb')
+reader = csv.reader(csvfile)
+
+a_list=[]
+for line in reader:
+    print line[0],line[1],line[2]
+    a_list.append(line)
+
+print '\n\n'
+
+n=[]
+m=[]
+for i in a_list:
+    print i[0],i[1],i[2]
+    if len(i[0])>0:
+        n=liebiao(i[0])
+        for j in n:
+            m.append(a_list[0][0]+str(j)+'-'+str(i[1])+'-'+str(i[2]))
+        
+#打印结果
+for i in m:
+    print i
+ 
+#输出到文件 方案3
+csvfile2 = file(a_list[0][0]+'.csv', 'wb')
+writer = csv.writer(csvfile2)
+for j in m:
+    data=j.split('-')
+    writer.writerow(data)
+    print j
+
+csvfile2.close()
+csvfile.close()
